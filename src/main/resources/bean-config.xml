@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="datasource-config.xml" />
+    <!--<bean id="messageService" class="com.sumscope.optimus.service.MessageService">
+        <property name="brokerMap" ref="brokerMap">
+        </property>
+    </bean>-->
+
+    <bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="username" value="dataservice@sumscope.com"></property>
+        <property name="password" value="7ty&amp;t%e"></property>
+        <property name="host" value="smtp.sumscope.com"></property>
+        <property name="port" value="25"></property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.host">smtp.sumscope.com</prop>
+                <prop key="mail.smtp.port">25</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean class="com.sumscope.cdh.web.util.EmailUtil">
+        <property name="toEmail" value="wenshuai.li@sumscope.com"></property>
+    </bean>
+</beans>

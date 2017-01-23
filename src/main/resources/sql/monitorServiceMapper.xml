@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sumscope.cdh.web.mapper.MonitorMapper">
+
+    <insert id="insertIntoBusinessInfo" parameterType="Map">
+        INSERT INTO business_info
+            (SERVICEKEY, FLOWTYPE, TOTAL, HANDLEMAX, HANDLEMIN, HANDLEMEDIAN, TIME, SUCCESSCOUNT, HANDLEAVERAGE)
+        VALUES
+            (#{serviceKey}, #{flowType}, #{type}, #{handleMax}, #{handleMin}, #{handleMedian}, #{time}, #{successCount}, #{handleAverage})
+    </insert>
+
+    <insert id="insertIntoExceptionInfo" parameterType="Map">
+        insert into exception_info
+        (SERVICEKEY, ERRORCODE, ERRORSTACK, ERRORMESSAGE, TIME)
+        VALUES
+        (#{serviceKey}, #{errorCode}, #{errorStack}, #{errorMessage}, FROM_UNIXTIME(#{time}/1000,'%Y-%m-%d %H:%i:%S'))
+    </insert>
+
+    <select id="queryBusinessInfo" parameterType="Map" resultType="com.sumscope.cdh.monitor.model.BusinessInfo">
+        SELECT SERVICEKEY, FLOWTYPE, TOTAL, HANDLEMAX, HANDLEMIN, HANDLEMEDIAN,
+        UNIX_TIMESTAMP(TIME) * 1000 AS TIME, SUCCESSCOUNT, HANDLEAVERAGE
+        FROM business_info
+        WHERE SERVICEKEY=#{serviceKey}
+        limit #{page}, #{size}
+    </select>
+
+    <select id="monitorDataSize" parameterType="Map" resultType="int">
+        SELECT COUNT(*) FROM ${table} WHERE SERVICEKEY=#{serviceKey}
+    </select>
+
+    <select id="queryExceptionInfo" parameterType="Map" resultType="com.sumscope.cdh.monitor.model.ExceptionInfo">
+        SELECT SERVICEKEY, ERRORCODE, ERRORMESSAGE,ERRORSTACK,
+        UNIX_TIMESTAMP(TIME) * 1000 AS TIME
+        FROM exception_info
+        WHERE SERVICEKEY=#{serviceKey} ORDER BY ID DESC limit #{page}, #{size}
+    </select>
+
+    <insert id="insertConnections" parameterType="Map">
+      INSERT INTO t_gateway_connections
+        (serviceKey, total, createtime)
+      VALUES
+        (#{serviceKey}, #{total}, FROM_UNIXTIME(#{time}/1000,'%Y-%m-%d %H:%i:%S'))
+    </insert>
+
+    <insert id="insertThroughput" parameterType="Map">
+        INSERT INTO t_gateway_throughput
+        (serviceKey, throughput, createtime)
+        VALUES
+        (#{serviceKey}, #{throughput}, FROM_UNIXTIME(#{time}/1000,'%Y-%m-%d %H:%i:%S'))
+    </insert>
+
+    <select id="t_gateway_connections" parameterType="Map" resultType="Map">
+        select `time` as date,
+               if(`total` is null,0,`total`) as value
+         from t_gateway_connections
+          where unix_timestamp(`time`) <![CDATA[   >=  ]]> unix_timestamp(#{starttime}) and unix_timestamp(`time`) <![CDATA[   <=  ]]> unix_timestamp(#{endtime}) and serviceKey = #{serviceKey};
+    </select>
+
+    <select id="t_gateway_throughput" parameterType="Map" resultType="Map">
+          select `time` as date,
+                  if(`throughput` is null,0, `throughput`)as value
+          from t_gateway_throughput
+          where unix_timestamp(`time`) <![CDATA[   >=  ]]> unix_timestamp(#{starttime}) and unix_timestamp(`time`) <![CDATA[   <=  ]]> unix_timestamp(#{endtime}) and serviceKey = #{serviceKey};
+    </select>
+
+    <select id="t_gateway_connections_all" parameterType="Map" resultType="Map">
+        select `time` as date,
+                if(`total` is null,0,`total`)  as value
+        from t_gateway_connections_all
+        where unix_timestamp(`time`) <![CDATA[   >=  ]]> unix_timestamp(#{starttime}) and unix_timestamp(`time`) <![CDATA[   <=  ]]> unix_timestamp(#{endtime});
+    </select>
+
+    <select id="t_gateway_throughput_all" parameterType="Map" resultType="Map">
+        select `time` as date,
+                if(`throughput` is null,0,`throughput`) as value
+        from t_gateway_throughput_all
+        where unix_timestamp(`time`) <![CDATA[   >=  ]]> unix_timestamp(#{starttime}) and unix_timestamp(`time`) <![CDATA[   <=  ]]> unix_timestamp(#{endtime});
+    </select>
+    <update id="createExceptionInfo" parameterType="int">
+        CREATE TABLE IF NOT EXISTS exception_info(
+        ID BIGINT NOT NULL AUTO_INCREMENT COMMENT 'id',
+        SERVICEKEY VARCHAR(100) NULL DEFAULT NULL COMMENT 'SERVICEKEY service id',
+        ERRORCODE VARCHAR(100) NULL DEFAULT NULL COMMENT '异常码',
+        ERRORMESSAGE VARCHAR(2000) NULL DEFAULT NULL COMMENT '异常信息',
+        ERRORSTACK TEXT NULL DEFAULT NULL COMMENT 'ERRORSTACK',
+        CREATETIME TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+        TIME datetime NULL DEFAULT NULL COMMENT '修改/访问时间',
+        PRIMARY KEY (ID) COMMENT 'monitor异常信息表'
+        )
+    </update>
+
+    <update id="createBusinessInfo" parameterType="int">
+        CREATE TABLE IF NOT EXISTS business_info(
+        ID BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+        SERVICEKEY VARCHAR(20) NULL DEFAULT NULL COMMENT 'SERVICEKEY service id',
+        FLOWTYPE VARCHAR(50) NULL DEFAULT NULL COMMENT 'FLOWTYPE',
+        TOTAL BIGINT(20) NULL DEFAULT NULL COMMENT '总数',
+        SUCCESSCOUNT BIGINT (20) NULL DEFAULT NULL COMMENT '成功总数',
+        HANDLEAVERAGE BIGINT(20) NULL DEFAULT NULL COMMENT '处理平均时间 单位：ms',
+        HANDLEMAX BIGINT(20) NULL DEFAULT NULL COMMENT '处理最大时间 单位：ms',
+        HANDLEMIN BIGINT(20) NULL DEFAULT NULL COMMENT '处理最小时间 单位：ms',
+        HANDLEMEDIAN BIGINT(20) NULL DEFAULT NULL COMMENT '处理中位时间 单位：ms',
+        CREATETIME TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+        TIME datetime NULL DEFAULT NULL COMMENT '修改/访问时间',
+        PRIMARY KEY (ID) COMMENT 'monitor业务数据表'
+        )
+    </update>
+
+</mapper>

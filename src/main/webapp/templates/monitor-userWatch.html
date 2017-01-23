@@ -1,0 +1,26 @@
+<div class="common-main clearfix">
+    <h3 id="monitor-2" class="common-main-title">用户监控</h3>
+    <div class="common-main-content">
+        <div class="api-user-grid api-user-grid1">
+            <div class="api-user-grid-title">
+            <div class="autoRefresh" data-radial-indicator="indicatorOption"  data-radial-indicator-model="indicatorValue" ng-click="refreshNow()" onselectstart="return false">
+            	<div class="loadingLogo" ng-show="loadingFlag"></div>
+            </div>
+			活跃用户TOP20
+            </div>
+            <div class="api-user-amounts-grid ss-ui-grid-default"  ui-grid="gridOptionsUserFrequency" ui-grid-selection ui-grid-resize-columns  my-ui-grid-auto-resize></div>
+        </div>
+        <div class="api-user-grid api-user-grid2">
+
+            <div uib-tooltip="{{tooltipSqlContent}}" tooltip-trigger="none" tooltip-is-open="isTooltipSqlContentShow" tooltip-placement="top">
+                <div class="api-user-grid-title">一个用户所访问的API的列表</div>
+            </div>
+
+            <div class="api-user-details-grid ss-ui-grid-default"  ui-grid="gridOptionsUserDelay" ui-grid-selection ui-grid-resize-columns  my-ui-grid-auto-resize></div>
+        	<button class="ss-btn ss-btn-info" ng-disabled="upLock" ng-click="pageUp()">上一页</button>
+        	<span class="currentPage">{{currentPage}}</span>
+        	<button class="ss-btn ss-btn-info" ng-disabled="downLock" ng-click="pageDown()">下一页</button>
+        </div>
+    </div>
+
+</div>

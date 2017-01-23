@@ -1,0 +1,42 @@
+<form class="login-info" name="loginForm" ng-submit="submitForm(input_userName,input_password)">
+    <p class="form-group"  ng-class="{'has-success':loginForm.username.$valid}">
+        <label class="login-label">用户名:</label>
+        <input placeholder="请输入用户名"
+               type="text"
+               name="uName"
+               ng-pattern="RegExpTest"
+               ng-model="input_userName"
+               ng-change="dismissToolTip()"
+               class="ss-input-text ss-input-text-sm"
+               required
+        />
+        <span class="login-error" ng-if="errorUsername">{{errorUsername || ''}}</span>
+        <span class="login-error" ng-if="loginForm.uName.$error.pattern && loginForm.uName.$touched">用户名只限数字&字母</span>
+    </p>
+
+    <p class="form-group">
+        <label class="login-label">密&nbsp&nbsp&nbsp码:&nbsp</label>
+
+        <input placeholder="请输入密码" type="password"
+                ng-model="input_password"
+                name="password"
+                ng-change="dismissToolTip()"
+                ng-pattern="RegExpTest"
+                class="ss-input-text ss-input-text-sm">
+        <span class="login-error" ng-if="!loginForm.password.$error.pattern && errorPassword">{{errorPassword || ''}}</span>
+        <span class="login-error" ng-if="loginForm.password.$error.pattern && loginForm.password.$touched">密码只限数字&字母</span>
+    </p>
+
+    <p class="form-group">
+        <!--<label class="login-rememberPassword">
+            <input type="checkbox" ng-click="isRememberPassword()"/>记住密码
+        </label>
+        <a class="changePassword" ng-click="gotoChangePassword()">修改密码</a>
+        <button tabindex="-1" type="submit" class="ss-btn-lg ss-btn-info" ng-click="gotoRegister()">注册</button> -->
+        <button style="width:100%" tabindex="0" class="ss-btn-lg ss-btn-info"
+            type="submit"
+            ng-disabled="loginForm.$invalid" >登录</button>
+        <!--<span ng-show="errorPassword" class="findPassword"><a ng-click="gotoFindPassword()">找回密码</a><a ng-click="gotoRegister()">注册</a></span>-->
+        <span class="findPassword"><a ng-click="gotoFindPassword()">找回密码</a><a ng-click="gotoRegister()">注册</a></span>
+    </p>
+</form>

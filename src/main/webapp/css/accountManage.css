@@ -1,0 +1,155 @@
+/*login*/
+.login-info,.register-info,.changePassword-info,.findPassword-info  {
+    margin: 300px auto;
+    width: 400px;
+    background: #232628;
+    border-radius: 7px;
+    padding: 40px 60px 15px 65px;
+}
+.login-info p+p,.register-info p+p,.changePassword-info p+p,.findPassword-info p+p {
+    margin-top: 30px;
+}
+.login-info label,.register-info label,.changePassword-info label,.findPassword-info label{
+    color: #0d7b7b;
+    min-width: 60px;
+    font-size: 16px;
+}
+.login-info .form-group input,.register-info .form-group input,.changePassword-info .form-group input,.findPassword-info .form-group input{
+    padding: 15px 10px;
+    width: 190px;
+}
+.login-info .login-rememberPassword{
+    display: inline-block;
+    color: #0d7b7b;
+    vertical-align: middle;
+}
+.login-info .login-rememberPassword input{
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-top: -1px;
+    margin-right: 8px;
+}
+.login-info .changePassword{
+    display: inline-block;
+    color:#0d7b7b;
+    cursor: pointer;
+    color: #0d7b7b;
+    font-weight: bold;
+    margin-left: 90px;
+    margin-top: -1px;
+    font-size: 16px;
+}
+.login-info button{
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.login-info button+button{
+    margin-left: 45px;
+}
+.login-info .findPassword{
+    margin-left: 20px;
+    color: #f38b1e;
+    font-size: 16px;
+}
+.login-info .findPassword a{
+    display: inline-block;
+    color: #f38b1e;
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 16px;
+ }
+.login-error,.changePassword-error{
+    color: red;
+    position: absolute;
+    min-width: 170px;
+    margin-top: 6px;
+    margin-left: 10px;
+}
+/*register*/
+.register-info .form-group label {
+	width: 80px;
+    text-align: justify;
+    text-align-last: justify;
+}
+
+.register-info .form-group input {
+    width: 190px;
+}
+.register-info button{
+    display: inline-block;
+    width: 275px;
+}
+.register-error{
+    color: red;
+    position: absolute;
+    min-width: 170px;
+    margin-top: -25px;
+    margin-left: 290px;
+}
+.alertRegisterInfo_success{
+    position: absolute;
+    top: 260px;
+    margin-left: 33px;
+    color: white;
+    font-weight: bold;
+}
+
+/*changePassword*/
+.changePassword-info{
+    padding-left: 57px;
+}
+.changePassword-info label{
+    width:80px;
+    text-align: right;
+}
+.changePassword-info .form-group input {
+    width: 190px;
+}
+.changePassword-info .reset{
+    height: 30px;
+    border: none;
+    border-radius: 2px;
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    line-height: 3px;
+    text-align: center;
+    background: #0d7b7b;
+    color: #ffebc8;
+    margin-left: 70px;
+}
+
+/*findPassword*/
+.findPassword-info .form-group input{
+    width: 190px;
+}
+.findPassword-info label{
+    width:80px;
+    text-align: right;
+}
+.findPassword-info button{
+    width: 273px;
+}
+.userName-error{
+    position: absolute;
+    top: 347px;
+    margin-left: 290px;
+    color: red;
+}
+.email-error{
+    position: absolute;
+    top: 407px;
+    margin-left: 290px;
+    color: red;
+}
+/**/
+.confirmPassword-error{
+    color: red;
+    position: absolute;
+    min-width: 170px;
+    margin-top: -27px;
+    margin-left: 285px
+}
+
+

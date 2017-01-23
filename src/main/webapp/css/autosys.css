@@ -1,0 +1,135 @@
+html,body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,img,div,dl,dt,dd,input,span {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #161819;
+	margin: 0;
+	font-size: 12px;
+	color: #ffda9a;
+	font-family: "Helvetica Neue", Helvetica;
+}
+
+li {
+	word-break: break-all;
+	word-wrap:break-word;
+}
+
+.temp-pre {
+	display: none;
+}
+
+.new-tip, .hot-tip {
+	top: 0;
+	position: absolute;
+}
+
+.hot-tip {
+	color: red;
+}
+
+.new-tip {
+	color: orange;
+}
+
+.infoKey {
+	display: inline-block;
+	padding: 1.5px 3px;
+	color: rgba(255,255,255,0.5);
+	background: rgba(97,97,97,0.5);
+	border-radius: 3px;
+}
+
+.infoValue {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	margin-right: 5px;
+	color: rgb(84,114,77);
+}
+
+.infoValueJob {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	margin-right: 5px;
+	color: #AE8ABE;
+}
+.triggerLi {
+	margin-left: 20px;
+}
+
+.page-btn {
+	text-align: center;
+	margin: 10px 0 20px;
+}
+
+.currentPage {
+	margin: 0 40px;
+	margin:0 20px;
+	font-size: 14px;
+	color: #FFEBC8;
+}
+
+.treeview .list-group li {
+	position: relative;
+	padding: 10px 30px;
+}
+
+.glyphicon, .indent {
+	position: absolute;
+}
+
+.expand-icon {
+    top: 13px;
+    left: 10px;
+    font-size: 14px;
+}
+
+.node-icon {
+	top: 13px;
+	right: 10px;
+	font-size: 14px;
+}
+
+.box {
+	display: none;
+}
+
+.detailed-info {
+	display: none;
+	position: absolute;
+	background: #ffda9a;
+	border-radius: 4px;
+}
+
+.detailed-info .san-tip {
+	content: "";
+    position: absolute;
+    right: -10px;
+    width: 0px;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-left: 10px solid #ffda9a;
+    border-bottom: 8px solid transparent;
+}
+
+.autoRefresh {
+	margin-right: 10px;
+	display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+.loadingLogo {
+	display: none;
+	position: absolute;    
+	border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    background: url(../images/loading.gif);
+    background-size: cover;
+}

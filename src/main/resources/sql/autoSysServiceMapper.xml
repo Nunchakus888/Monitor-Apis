@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sumscope.cdh.web.mapper.AutoSysMapper">
+
+    <select id="jobInfo" parameterType="Map" resultType="com.sumscope.cdh.web.domain.Autosys">
+
+        SELECT
+
+        tll.triggerName AS triggerName,
+        tll.startTime AS startTime,
+        tll.endTime AS endTime,
+        IF(tll.status = 2, Now() - tll.startTime, tll.endTime - tll.startTime) as takeTime,
+        tll.startDetail AS startDetail,
+        tll.endDetail AS endDetail,
+        tll.status AS status,
+
+        from_unixtime((t.NEXT_FIRE_TIME - 621355968000000000) /10000000) AS nextFireTime,
+        from_unixtime((t.PREV_FIRE_TIME - 621355968000000000) /10000000) AS prevFireTime,
+        t.TRIGGER_GROUP AS triggerGroup,
+        t.DESCRIPTION AS triggerDescription,
+        t.PRIORITY AS priority,
+        t.TRIGGER_STATE AS triggerState,
+        t.TRIGGER_TYPE AS triggerType,
+        t.CALENDAR_NAME AS calendarName,
+        t.MISFIRE_INSTR AS misfireInstr,
+        t.JOB_DATA AS triggerJobData,
+
+        j.JOB_NAME AS jobName,
+        j.JOB_GROUP AS jobGroup,
+        j.SCHED_NAME AS schedName,
+        j.DESCRIPTION AS description,
+        j.JOB_CLASS_NAME AS jobClassName,
+        j.IS_DURABLE AS isDurable,
+        j.IS_NONCONCURRENT AS isNonconcurrent,
+        j.IS_UPDATE_DATA AS isUpdateData,
+        j.REQUESTS_RECOVERY AS requestsRecovery,
+        j.JOB_DATA AS jobData
+
+        FROM
+            (select
+                tl.*
+                from(
+                    select max(tmax.starttime) as starttime, tmax.triggername
+                    from
+                    ${database}.TRIGGER_LOG tmax
+                    group by tmax.triggerName
+                    order by tmax.starttime desc
+            ) a,
+            ${database}.TRIGGER_LOG tl
+            where a.triggername = tl.triggername
+            and a.starttime=tl.starttime)
+        tll,
+        ${database}.QRTZ_TRIGGERS t,
+        ${database}.QRTZ_JOB_DETAILS j
+
+        WHERE
+
+        tll.triggerName = t.TRIGGER_NAME and
+        t.JOB_NAME = j.JOB_NAME
+        group by tll.triggerName
+        LIMIT #{page}, #{size}
+    </select>
+
+    <update id="insertIntoTriggerLog" parameterType="Map">
+
+        <if test="type == 2">
+            INSERT INTO ${database}.TRIGGER_LOG
+            (uuid,schedName,triggerName,triggerGroup,startTime,status,startDetail)
+            VALUES
+            ( #{uuid}, #{schedName}, #{triggerName}, #{triggerGroup}, #{sqlTime},#{type}, #{detail})
+        </if>
+
+        <if test="type == 3">
+            UPDATE ${database}.TRIGGER_LOG
+            SET endTime = #{sqlTime}, endDetail = #{detail}, status= #{type} WHERE uuid = #{uuid}
+        </if>
+
+        <if test="type == 1">
+            UPDATE ${database}.TRIGGER_LOG
+            SET endTime = #{sqlTime}, endDetail = #{detail}, status= #{type} WHERE uuid = #{uuid}
+        </if>
+    </update>
+
+    <select id="triggerInfo" parameterType="Map" resultType="com.sumscope.cdh.web.domain.Autosys">
+        SELECT SERVICEKEY, ERRORCODE, ERRORMESSAGE,ERRORSTACK,
+        UNIX_TIMESTAMP(TIME) * 1000 AS TIME
+        FROM exception_info
+        WHERE SERVICEKEY=#{serviceKey} ORDER BY ID DESC limit #{page}, #{size}
+    </select>
+
+    <update id="createTriggerLogTable">
+        CREATE TABLE IF NOT EXISTS ${database}.TRIGGER_LOG (
+        uuid VARCHAR(100) NULL DEFAULT NULL COMMENT 'trigger执行时生成，标记本次执行',
+        schedName VARCHAR(100) NULL DEFAULT NULL COMMENT '调度器名称',
+        status INT(1) NULL DEFAULT NULL COMMENT '日志类型,1:异常,2:start,3:end',
+        triggerName VARCHAR(100) NULL DEFAULT NULL,
+        triggerGroup VARCHAR(100) NULL DEFAULT NULL,
+        startTime DATETIME NULL DEFAULT NULL,
+        endTime DATETIME NULL DEFAULT NULL,
+        startDetail TEXT NULL,
+        endDetail TEXT NULL
+        );
+
+    </update>
+
+
+</mapper>

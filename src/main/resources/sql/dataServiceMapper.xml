@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sumscope.cdh.web.mapper.ApiUsageMapper">
+    <select id="apiUsageRate" resultType="com.sumscope.cdh.web.domain.ApiUsageRate" parameterType="Map">
+        SELECT APINAME, MAX(CREATETIME) AS LASTVISITED, COUNT(APINAME) AS COUNTAPI
+        FROM t_log
+        where CURDATE() &lt;= CREATETIME AND
+        <choose>
+            <when test="apiName != null &amp; apiName != ''">
+                APINAME LIKE CONCAT('%',#{apiName},'%')
+            </when>
+            <otherwise>
+                APINAME != ''
+            </otherwise>
+        </choose>
+        GROUP BY APINAME
+        ORDER BY COUNTAPI DESC, APINAME
+        LIMIT #{page}, #{size} <!--# 当天的API使用频率-->
+    </select>
+
+    <select id="apiUsageTakeTime" resultType="com.sumscope.cdh.web.domain.ApiUsageTakeTime" parameterType="Map">
+        SELECT APINAME, MAX(CREATETIME) AS LASTVISITED, AVG(SQL_TAKETIME) AS SQLTAKETIME
+        FROM t_log
+        where CURDATE() &lt;= CREATETIME AND
+        <choose>
+            <when test="apiName != null &amp; apiName != ''">
+                APINAME LIKE CONCAT('%',#{apiName},'%')
+            </when>
+            <otherwise>
+                APINAME != ''
+            </otherwise>
+        </choose>
+        GROUP BY APINAME
+        ORDER BY SQLTAKETIME DESC, APINAME
+        LIMIT #{page}, #{size} #当天的 SQLTAKETIME
+    </select>
+
+    <select id="apiDetailsSize" parameterType="Map" resultType="int">
+        SELECT COUNT(*) FROM (SELECT * FROM t_log WHERE CURDATE() &lt;= CREATETIME
+        <choose>
+            <when test="apiName != null &amp; apiName != ''">
+                AND APINAME=#{apiName}
+                GROUP BY MSG_DETAIL, USERNAME, SQL_ROWCOUNT)T
+            </when>
+            <when test="userName != null &amp; userName != ''">
+                AND USERNAME=#{userName}
+                GROUP BY APINAME)T
+            </when>
+        </choose>
+    </select>
+
+    <select id="errorDetailsSize" parameterType="Map" resultType="int">
+        SELECT COUNT(*) FROM (
+        SELECT * FROM t_log WHERE LOGLEVEL='Error' AND CURDATE() &lt;= CREATETIME
+        <if test="userName != null &amp; userName != ''">
+            AND USERNAME LIKE CONCAT('%',#{userName},'%')
+        </if>
+        <if test="className != null &amp; className != ''">
+            AND CLASSNAME LIKE CONCAT('%',#{className},'%')
+        </if>
+        <if test="method != null &amp; method != ''">
+            AND METHOD LIKE CONCAT('%',#{method},'%')
+        </if>
+        <if test="apiName != null &amp; apiName != ''">
+            AND APINAME LIKE CONCAT('%',#{apiName},'%')
+        </if>
+        <if test="dataSource != null &amp; dataSource != ''">
+            AND DATA_SOURCE_ID LIKE CONCAT('%',#{dataSource},'%')
+        </if>
+        GROUP BY LOGID)TOTAL
+    </select>
+
+    <select id="aApiUsageDetails" parameterType="Map" resultType="com.sumscope.cdh.web.domain.ApiUsageDetails">
+        SELECT
+        USERNAME,
+        MSG_DETAIL AS MSGDETAIL,
+        SQL_ROWCOUNT AS ROWCOUNT,
+        COUNT(case when LOGLEVEL='warn' then LOGLEVEL end) AS COUNTSQL,
+        COUNT(case when LOGLEVEL='Error' then LOGLEVEL end) AS COUNTERROR,
+        AVG(SQL_TAKETIME) AS SQLTAKETIME
+        FROM t_log
+        WHERE APINAME=#{apiName} AND CURDATE() &lt;= CREATETIME
+        GROUP BY MSG_DETAIL, USERNAME, SQL_ROWCOUNT
+        ORDER BY SQLTAKETIME DESC LIMIT #{page}, #{size}
+    </select>
+
+    <select id="apiUsageByUsersRate" resultType="com.sumscope.cdh.web.domain.ApiUsageByUsersRate">
+        SELECT USERNAME,MAX(CREATETIME) AS LASTVISITED, COUNT(USERNAME) AS apiUsageByUserRate
+        FROM t_log where
+        CURDATE() &lt;=
+        CREATETIME AND USERNAME
+        != '' GROUP BY USERNAME
+        ORDER BY apiUsageByUserRate DESC, USERNAME #当天的用户访问API次数排名
+    </select>
+
+    <select id="aUserUsageApiList" parameterType="Map" resultType="com.sumscope.cdh.web.domain.UserUsageApiList">
+        SELECT APINAME,
+        COUNT(case when LOGLEVEL='warn' then LOGLEVEL end) AS COUNTSQL,
+        COUNT(case when LOGLEVEL='Error' then LOGLEVEL end) AS COUNTERROR,
+        COUNT(APINAME) AS COUNTAPI
+        FROM t_log
+        WHERE USERNAME=#{userName} AND CURDATE() &lt;= CREATETIME
+        GROUP BY APINAME
+        ORDER BY COUNTAPI DESC, APINAME LIMIT #{page}, #{size} #某个用户访问的API列表
+    </select>
+
+    <select id="errorDetails" parameterType="Map" resultType="com.sumscope.cdh.web.domain.ErrorDetails">
+        SELECT LOGID as logId,
+        LOGTYPE as logType,
+        USERNAME as userName,
+        CLASSNAME as className,
+        METHOD as method,
+        CREATETIME as createTime,
+        MSG as msg,
+        SQL_ROWCOUNT as sqlRowCount,
+        MSG_DETAIL as msgDetail,
+        APINAME as apiName,
+        SQL_COLCOUNT as sqlColcount,
+        SQL_TAKETIME as sqlTakeTime,
+        DATA_SOURCE_ID as dataSource
+        FROM t_log
+        WHERE LOGLEVEL='Error' AND CURDATE() &lt;= CREATETIME
+        <if test="userName != null &amp; userName != ''">
+            AND USERNAME LIKE CONCAT('%',#{userName},'%')
+        </if>
+        <if test="className != null &amp; className != ''">
+            AND CLASSNAME LIKE CONCAT('%',#{className},'%')
+        </if>
+        <if test="method != null &amp; method != ''">
+            AND METHOD LIKE CONCAT('%',#{method},'%')
+        </if>
+        <if test="apiName != null &amp; apiName != ''">
+            AND APINAME LIKE CONCAT('%',#{apiName},'%')
+        </if>
+        <if test="dataSource != null &amp; dataSource != ''">
+            AND DATA_SOURCE_ID LIKE CONCAT('%',#{dataSource},'%')
+        </if>
+        GROUP BY LOGID
+        ORDER BY LOGID DESC LIMIT #{page}, #{size}
+    </select>
+
+</mapper>

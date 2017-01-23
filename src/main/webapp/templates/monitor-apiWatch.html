@@ -1,0 +1,33 @@
+<div class="common-main">
+    <h3 id="monitor-1" class="common-main-title">API监控</h3>
+
+    <div class="common-main-content clearfix">
+        <div class="api-watch-grid api-watch-grid1">
+        	<div class="api-watch-grid-title">
+                <div class="autoRefresh" data-radial-indicator="indicatorOption"  data-radial-indicator-model="indicatorValue" ng-click="refreshNow()" onselectstart="return false">
+                	<div class="loadingLogo" ng-show="loadingFlag"></div>
+                </div>
+                API使用频率TOP20
+                <button class="ss-btn ss-btn-info" ng-click="apiSearchBtn()" ng-disabled="searchBtnFlag">高级搜索</button>
+			    <div class="api-watch-search" ng-show="apiSearchFlag">
+			    	<input type="text" placeholder="API名" class="ss-input-text ss-input-text-sm" ng-model="apiNameModel" />
+			    	<div class="api-watch-search-btn">
+			    		<button class="ss-btn ss-btn-info" ng-click="apiSearchSubmit(apiNameModel,'frequency')">提交</button>
+			    		<button class="ss-btn ss-btn-info" ng-click="apiSearchCancel()">取消</button>
+			    	</div>
+			    </div>
+            </div>
+            
+            <div class="api-watch-frequency-grid ss-ui-grid-default"  ui-grid="gridOptionsApiFrequency" ui-grid-selection ui-grid-resize-columns  my-ui-grid-auto-resize></div>
+        </div>
+        <div class="api-watch-grid api-watch-grid2">
+            <div uib-tooltip="{{tooltipSqlContent}}" tooltip-trigger="none" tooltip-is-open="isTooltipSqlContentShow" tooltip-placement="top">
+                <div class="api-watch-grid-title">API使用详情 &nbsp; {{currentApiName}}</div>
+            </div>
+            <div class="api-watch-details-grid ss-ui-grid-default"  ui-grid="gridOptionsApiDetails" ui-grid-selection ui-grid-resize-columns  my-ui-grid-auto-resize></div>
+        	<button class="ss-btn ss-btn-info" ng-disabled="upLock" ng-click="pageUp()">上一页</button>
+        	<span class="currentPage">{{currentPage}}</span>
+        	<button class="ss-btn ss-btn-info" ng-disabled="downLock" ng-click="pageDown()">下一页</button>
+        </div>
+    </div>
+</div>

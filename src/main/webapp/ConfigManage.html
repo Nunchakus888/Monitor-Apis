@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>ConfigManage</title>
+	<link type="text/css" rel="stylesheet" href="./lib/prism.css" />
+	<link type="text/css" rel="stylesheet" href="./css/avalon-ui.css" />
+	<link type="text/css" rel="stylesheet" href="./lib/font-awesome.min.css" />
+	<link type="text/css" rel="stylesheet" href="./css/ui-grid-style-change.css" />
+	<link type="text/css" rel="stylesheet" href="./css/ConfigManage.css" />
+</head>
+
+<body>
+	<button class="ss-btn ss-btn-info back">back</button>
+	<div id="body">
+		<div class="menu">
+			<h3 class="menu-title">NodeName</h3>
+			<p class="nodePath"><b>Path:</b><span></span><!--<i class="fa fa-files-o copyPath"></i>--></p>
+			<div class="nodeValue">
+				<p><b>Value:</b><!--<i class="fa fa-files-o copyValue"></i>--></p>
+				<div class="edit-box-wrap">
+					<div class="edit-box">	
+						<button class="edit-submit ss-btn ss-btn-info" disabled="disabled">submit</button>
+						<button class="edit-cancle ss-btn ss-btn-info" disabled="disabled">cancle</button>
+						<button class="edit-export ss-btn ss-btn-info">导出</button>
+					</div>
+					<div class="edit-value">
+						<table class="ss-table">
+							<tbody class="edit-tbody ss-table-body"></tbody>
+						</table>
+					</div>
+				</div>
+				
+			</div>
+			<p class="nodeChildren"><b>Children[ ]</b><span class="childrenList"></span></p>
+			
+			<div class="operation-wrap">
+				<h3>Operation Panel</h3>
+				<div class="menu-operation">
+					<button class="addData ss-btn ss-btn-info" disabled="disabled">add</button>
+					<button class="editData ss-btn ss-btn-info" disabled="disabled">edit</button>
+					<button class="delData ss-btn ss-btn-info" disabled="disabled">delete</button>
+				</div>
+				<div class="menu-choose">
+					<button class="menu-confirm ss-btn ss-btn-info">确认</button>
+					<button class="menu-cancel ss-btn ss-btn-info">取消</button>
+				</div>
+			</div>
+			
+			<div class="menuInput">
+				<div class="inputWay">
+					<label><input type="radio" name="way" checked>文本上传</label>
+					<label><input type="radio" name="way">文件上传</label>
+				</div>
+				<input type="text" placeholder="name" class="inputName ss-input-text ss-input-text-sm" maxlength="15" /><br />
+				<textarea placeholder="value" class="inputValue" rows="10"></textarea><br />
+				<form id="uploadFile" enctype="multipart/form-data">
+					<p>File to upload:</p>
+					<input type="file" name="file"><br />
+				</form>
+			</div>
+			
+		</div>
+		<div class="operationShade"></div>
+		<div class="shade">
+			<div class="warn-tip">
+				<h3 class="warn-tip-title">警告：确定要删除该节点（<span></span>）及其以下节点？</h3>
+				<button class="warn-tip-confirm ss-btn ss-btn-info">确认</button>
+				<button class="warn-tip-cancel ss-btn ss-btn-info">取消</button>
+			</div>
+		</div>
+		
+		<ul class="cutline">
+			<li><span></span>分支节点，单击：显示该节点详细信息/操作面板</li>
+			<li>双击：展开/收起该节点子目录</li>
+			<li><span></span>叶子节点，单击：显示该节点详细信息/操作面板</li>
+			<li></li>
+		</ul>
+	</div>
+</body>
+
+<script type="text/javascript" src="./lib/d3.js"></script>
+<script type="text/javascript" src="./lib/d3.layout.js"></script>
+<script type="text/javascript" src="./lib/jquery.min.js"></script>
+<script type="text/javascript" src="./lib/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="./lib/prism.js"></script>
+
+<script type="text/javascript" src="./script/commonConfig.js"></script>
+<script type="text/javascript" src="./script/ConfigManage.js"></script>
+<script type="text/javascript" src="./script/ConfigManageOperate .js"></script>
+
+</html>

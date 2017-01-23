@@ -1,0 +1,30 @@
+<div class="common-main clearfix">
+    <h3 id="monitor-3" class="common-main-title">错误监控</h3>
+    <div class="api-watch-error-grid">
+
+        <div uib-tooltip="{{tooltipSqlContent}}" tooltip-trigger="none" tooltip-is-open="isTooltipSqlContentShow" tooltip-placement="top">
+            <div class="api-error-grid-title">
+                <div class="autoRefresh" data-radial-indicator="indicatorOption"  data-radial-indicator-model="indicatorValue" ng-click="refreshNow()" onselectstart="return false">
+                	<div class="loadingLogo" ng-show="loadingFlag"></div>
+                </div>
+                API Error日志（当天）
+                <button class="ss-btn ss-btn-info" ng-click="errorSearchBtn()" ng-disabled="searchBtnFlag">高级搜索</button>
+			    <div class="api-watch-error-search" ng-show="errorSearchFlag">
+			    	<input type="text" placeholder="用户名" class="ss-input-text ss-input-text-sm" ng-model="userNameModel" />
+			    	<input type="text" placeholder="类名" class="ss-input-text ss-input-text-sm" ng-model="classNameModel" />
+			    	<input type="text" placeholder="方法名" class="ss-input-text ss-input-text-sm" ng-model="methodModel" />
+			    	<input type="text" placeholder="API名" class="ss-input-text ss-input-text-sm" ng-model="apiNameModel" />
+			    	<input type="text" placeholder="数据源ID" class="ss-input-text ss-input-text-sm" ng-model="dataSourceModel" />
+			    	<div class="api-watch-error-search-btn">
+			    		<button class="ss-btn ss-btn-info" ng-click="errorSearchSubmit(userNameModel,classNameModel,methodModel,apiNameModel,dataSourceModel)">提交</button>
+			    		<button class="ss-btn ss-btn-info" ng-click="errorSearchCancel()">取消</button>
+			    	</div>
+			    </div>
+            </div>
+        </div>
+        <div class="error-watch-details-grid ss-ui-grid-default"  ui-grid="gridOptionsErrorLog" ui-grid-selection ui-grid-resize-columns my-ui-grid-auto-resize ui-grid-cellnav></div>
+    	<button class="ss-btn ss-btn-info" ng-disabled="upLock" ng-click="pageUp()">上一页</button>
+    	<span class="currentPage">{{currentPage}}</span>
+        <button class="ss-btn ss-btn-info" ng-disabled="downLock" ng-click="pageDown()">下一页</button>
+    </div>
+</div>

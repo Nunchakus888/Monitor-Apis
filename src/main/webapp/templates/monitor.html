@@ -1,0 +1,10 @@
+<nav class="nav-left">
+	<ul>
+		<li ng-class="{active:$state.includes('main.monitor.monitor-apiWatch')}" ui-sref="main.monitor.monitor-apiWatch">API频率监控<span class="fa fa-line-chart"></span></li>
+		<li ng-class="{active:$state.includes('main.monitor.monitor-apiWatch2')}" ui-sref="main.monitor.monitor-apiWatch2">API延迟监控<span class="fa fa-line-chart"></span></li>
+		<li ng-class="{active:$state.includes('main.monitor.monitor-userWatch')}" ui-sref="main.monitor.monitor-userWatch">用户监控<span class="fa fa-area-chart"></span></li>
+		<li ng-class="{active:$state.includes('main.monitor.monitor-errorWatch')}" ui-sref="main.monitor.monitor-errorWatch">错误监控<span class="fa fa-bar-chart"></span></li>
+	</ul>
+</nav>
+
+<div ui-view></div>

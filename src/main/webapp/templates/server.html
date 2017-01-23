@@ -1,0 +1,32 @@
+<nav class="nav-left nav-left-server">
+	<ul>
+		<li ng-repeat="x in serverArr" ng-click="serverNav($index,x)" ng-class="{'active':$index==navIndex}">{{x.name}}
+			<div class="serverBreakTip" ng-class="{'activeTip':x.status==0}">挂了！！！</div>
+		</li>
+	</ul>
+</nav>
+
+<div class="common-main common-server">
+	<!--<div class="server-biz">
+		<div class="serverTitle">
+			<h4>业务</h4>
+			<button class="ss-btn ss-btn-info" ng-disabled="upLockBiz" ng-click="pageUp('biz')">上一页</button>
+			<span class="currentPage">{{BIZcurrentPage}}</span>
+			<button class="ss-btn ss-btn-info" ng-disabled="downLockBiz" ng-click="pageDown('biz')">下一页</button>
+		</div>
+		<div class="server-business-grid ss-ui-grid-default"  ui-grid="gridOptionsBusiness" ui-grid-selection ui-grid-resize-columns  my-ui-grid-auto-resize></div>
+	</div>-->
+
+	<div class="server-ex">
+		<div class="serverTitle">
+			<h4>异常</h4>
+			<button class="ss-btn ss-btn-info" ng-disabled="upLockEx" ng-click="pageUp('ex')">上一页</button>
+			<span class="currentPage">{{EXcurrentPage}}</span>
+			<button class="ss-btn ss-btn-info" ng-disabled="downLockEx" ng-click="pageDown('ex')">下一页</button>
+		</div>
+		<div uib-tooltip="{{tooltipSqlContent}}" tooltip-trigger="none" tooltip-is-open="isTooltipSqlContentShow" tooltip-placement="top">
+			<div class="server-exception-grid ss-ui-grid-default"  ui-grid="gridOptionsException" ui-grid-selection ui-grid-resize-columns ui-grid-cellnav my-ui-grid-auto-resize></div>
+		</div>
+	</div>
+
+</div>

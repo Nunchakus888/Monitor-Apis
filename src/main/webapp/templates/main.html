@@ -1,0 +1,21 @@
+<nav class="main-nav">
+    <div class="navbar-header">
+    	<span class="navbar-brand main-nav-logo">M</span>
+        <span class="navbar-brand main-nav-title">Monitor</span>
+    </div>
+    <ul class="nav navbar-nav navbar-left main-nav-left">
+    	<li><a ng-class="{active:$state.includes('main.monitor')}" ui-sref="main.monitor.monitor-apiWatch"><i class="fa fa-desktop"></i> Monitor<span></span></a></li>
+		<li><a ng-class="{active:$state.includes('main.server')}" ui-sref="main.server"><i class="fa fa-desktop"></i> Service<span></span></a></li>
+		<li><a ng-class="{active:$state.includes('main.gateway')}" ui-sref="main.gateway"><i class="fa fa-desktop"></i> Gateway<span></span></a></li>
+		<!--<li><a ng-class="{active:$state.includes('main.apilist')}" ui-sref="main.apilist"><i class="fa fa-list"></i> ApiList<span></span></a></li>
+		<li><a ng-class="{active:$state.includes('main.userinfo')}" ui-sref="main.userinfo"><i class="fa fa-user"></i> UserInfo<span></span></a></li>-->
+		<li><a ng-class="{active:$state.includes('main.autosys')}" ui-sref="main.autosys"><i class="fa fa-server"></i> AutoSys<span></span></a></li>
+		<li><a ui-sref="configManage"><i class="fa fa-tree"></i> ConfigManage<span></span></a></li>
+    </ul>
+    <!-- <ul class="nav navbar-nav navbar-right  main-nav-right">
+        <li ><a href="javascript:;">{{input_userName}}</a></li>
+        <li><a href="javascript:;" ng-click="logout()">注销</a></li>
+    </ul> -->
+</nav>
+
+<div ui-view></div>

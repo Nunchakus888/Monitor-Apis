@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sumscope.cdh.web.mapper.UserMapper">
+
+        <select id="checkUserName" parameterType="Map" resultType="com.sumscope.cdh.web.domain.UserInfo">
+            <if test="userName !='' &amp; userName != null">
+                SELECT * FROM admin_user_info WHERE USERNAME = #{userName}
+            </if>
+        </select>
+
+        <insert id="register" parameterType="Map">
+            <if test="userName !='' &amp; userName != null &amp; password !='' &amp; password != null &amp; email !='' &amp; email != null">
+                INSERT INTO admin_user_info (USERNAME, PASSWORD, EMAIL, STATUS) VALUES(#{userName},#{password},#{email},#{status})
+            </if>
+        </insert>
+
+        <select id="login" parameterType="Map" resultType="com.sumscope.cdh.web.domain.UserInfo">
+            <if test="(userName !='' &amp; userName != null)">
+                SELECT * FROM admin_user_info WHERE USERNAME = #{userName}
+            </if>
+        </select>
+
+        <select id="updatePassword" parameterType="Map">
+            <if test="userName !='' &amp; userName != null &amp; password !='' &amp; password != null">
+                UPDATE admin_user_info SET PASSWORD=#{password} WHERE USERNAME = #{userName}
+            </if>
+        </select>
+
+        <update id="createNewTable" parameterType="int">
+            CREATE TABLE IF NOT EXISTS admin_user_info(
+            ID BIGINT NOT NULL AUTO_INCREMENT,
+            USERNAME VARCHAR(50) NOT NULL,
+            PASSWORD VARCHAR(50) NOT NULL,
+            EMAIL VARCHAR(50) NOT NULL,
+            STATUS TINYINT(1) NOT NULL DEFAULT 0 COMMENT '1:administration, 0:everyone',
+            PRIMARY KEY (ID),
+            UNIQUE KEY USERNAMES(USERNAME))
+        </update>
+
+
+</mapper>

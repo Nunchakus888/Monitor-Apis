@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataServiceSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataServiceDS" />
+        <property name="configLocation">
+            <value>classpath:sql/dataService-config.xml</value>
+        </property>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:sql/dataServiceMapper.xml</value>
+                <value>classpath:sql/userServiceMapper.xml</value>
+                <value>classpath:sql/monitorServiceMapper.xml</value>
+                <value>classpath:sql/autoSysServiceMapper.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataServiceSessionTemplate" scope="prototype" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="dataServiceSessionFactory" />
+    </bean>
+
+    <bean id="apiUsageMapper" class="com.sumscope.cdh.web.mapper.ApiUsageMapper">
+        <property name="dataServiceSessionTemplate" ref="dataServiceSessionTemplate"></property>
+    </bean>
+
+    <bean id="apiUsageRateService" class="com.sumscope.cdh.web.service.ApiUsageService">
+        <property name="apiUsageMapper" ref="apiUsageMapper"></property>
+    </bean>
+
+    <bean id="userMapper" class="com.sumscope.cdh.web.mapper.UserMapper">
+        <property name="dataServiceSessionTemplate" ref="dataServiceSessionTemplate"></property>
+    </bean>
+
+    <bean id="userService" class="com.sumscope.cdh.web.service.UserService">
+        <property name="userMapper" ref="userMapper"></property>
+    </bean>
+
+    <bean id="MonitorMapper" class="com.sumscope.cdh.web.mapper.MonitorMapper">
+        <property name="dataServiceSessionTemplate" ref="dataServiceSessionTemplate"></property>
+    </bean>
+
+    <bean id="AutoSysMapper" class="com.sumscope.cdh.web.mapper.AutoSysMapper">
+        <property name="dataServiceSessionTemplate" ref="dataServiceSessionTemplate"></property>
+        <property name="databaseName">
+            <value>${database_name}</value>
+        </property>
+    </bean>
+
+
+    <!-- dbcp2-->
+    <bean id="dataServiceDS" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${spring.dataService.url}" />
+        <property name="username" value="${spring.dataService.username}" />
+        <property name="password" value="${spring.dataService.password}" />
+
+        <property name="maxTotal" value="10" />
+        <property name="initialSize" value="5" />
+        <property name="maxWaitMillis" value="60000" />
+        <property name="minIdle" value="1" />
+
+        <property name="timeBetweenEvictionRunsMillis" value="3000" />
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="validationQuery" value="SELECT 'x' FROM DUAL" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="removeAbandonedOnBorrow" value="true" />
+        <property name="removeAbandonedTimeout" value="120" />
+    </bean>
+
+
+</beans>

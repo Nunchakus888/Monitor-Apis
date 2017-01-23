@@ -1,0 +1,134 @@
+/* <ui-grid> --- */
+.ss-ui-grid-default {
+    color: #ffebc8;
+    border: 1px solid transparent;
+}
+
+/*去除标题行下方的一像素的间隔*/
+/*.ss-ui-grid-default .ui-grid-canvas {
+    padding-top: 1px;ss-ui-grid-default
+}*/
+.ss-ui-grid-default .ui-grid-canvas > div:nth-child(1) {
+    margin-top: -1px;
+}
+
+/*去除点击时的边框样式*/
+.ss-ui-grid-default .ui-grid-header-cell-primary-focus {
+    outline: none !important;
+}
+
+.ss-ui-grid-default .ias-ui-grid {
+    background-color: #161819;
+    border: 1px solid #000;
+}
+
+.ss-ui-grid-default .ui-grid-invisible {
+    visibility: hidden;
+    display: none;
+}
+
+.ss-ui-grid-default .ui-grid .ui-grid-render-container-body .ui-grid-viewport {
+    /* 问题描述：高度超过限制，该出滚动条时却不出现。 */
+    /* 解决方式：添加该CSS，达到自动出现滚动条需求 */
+    overflow: auto !important;
+}
+
+.ss-ui-grid-default .ui-grid-header {
+    border: 0;
+}
+
+.ss-ui-grid-default .ui-grid-top-panel {
+    background: #191b1c;
+}
+
+.ss-ui-grid-default .ui-grid-header-cell {
+    border-right: 0;
+    color: #7b8082;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.ss-ui-grid-default .ui-grid-header-cell:last-child .ui-grid-column-resizer.right {
+    border: 0;
+}
+
+.ss-ui-grid-default .ui-grid-row:nth-child(odd) .ui-grid-cell {
+    background-color: #232628;
+}
+
+.ss-ui-grid-default .ui-grid-row:nth-child(even) .ui-grid-cell {
+    background-color: #191b1c;
+}
+
+.ss-ui-grid-default .ui-grid-row:hover .ui-grid-cell {
+    background-color: #1d4243 !important;
+}
+
+.ss-ui-grid-default .ui-grid-cell {
+    border-right: 0;
+}
+
+.ss-ui-grid-default .ui-grid-cell-contents {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.ss-ui-grid-default .ui-grid-row .ui-grid-cell.ui-grid-row-header-cell {
+    border-bottom: 0;
+    color: #bbc9d2;
+}
+
+.ss-ui-grid-default .ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-header-cell:last-child {
+    border-right: 0;
+}
+
+.ss-ui-grid-default .ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-cell:last-child {
+    border-right: 0;
+}
+
+.ss-ui-grid-default .ui-grid-row.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell {
+    background-color: #1a5656;
+}
+
+/* --- <ui-grid> */
+/* ---scrollBar style */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #474a4c;
+    -webkit-border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #62676b;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: #119595;
+}
+
+/* ---scrollBar style */
+.grid {
+    width: 100%;
+    height: 250px;
+}
+
+
+/* <high-charts --- */
+.api-watch-details-chart{
+
+}
+
+/*单元格选中时的外边框*/
+/*.ui-grid-focuser:focus {
+	border: 0 !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}*/

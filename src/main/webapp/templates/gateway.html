@@ -1,0 +1,38 @@
+<nav class="nav-left nav-left-gateway">
+	<ul>
+		<li ng-repeat="x in serverArr" ng-click="serverNav(x)" ng-class="{'active':x==serviceKey}">{{x}}</li>
+	</ul>
+</nav>
+
+<div class="common-main clearfix common-main-gw">
+	
+	<div class="gw-search">
+		<div class="gw-search-date">
+	        <p class="input-group">
+	        	<input type="text" class="form-control ss-input-text" 
+	        		uib-datepicker-popup="yyyy-MM-dd" ng-model="date1" is-open="popup1.opened" datepicker-options="dateOptions" 
+	        		ng-required="true" close-text="Close" />
+	        	<span class="input-group-btn">
+	            	<button type="button" class="btn gw-date-btn" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+	         	</span>
+	        </p>
+	    </div>
+	    <span class="line"></span>
+	    <div class="gw-search-date">
+	        <p class="input-group">
+	        	<input type="text" class="form-control ss-input-text" 
+	        		uib-datepicker-popup="yyyy-MM-dd" ng-model="date2" is-open="popup2.opened" datepicker-options="dateOptions" 
+	        		ng-required="true" close-text="Close" />
+	        	<span class="input-group-btn">
+	            	<button type="button" class="btn gw-date-btn" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+	         	</span>
+	        </p>
+	    </div>
+		<!--<input type="date" ng-model="date1" class="ss-input-text" \>
+		<span></span>
+		<input type="date" ng-model="date2" class="ss-input-text" \>-->
+		<button class="ss-btn-lg ss-btn-info gw-search-btn" ng-click="search(date1,date2,serviceKey)" ng-disabled="date1>date2">查询</button>
+	</div>
+	<div id="chartNum" class="chartdiv"></div>	
+	<div id="chartData" class="chartdiv"></div>	
+</div>
