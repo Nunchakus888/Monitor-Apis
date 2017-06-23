@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by roidder on 2016/4/6.
+ * U can visit this project on https://github.com/Nunchakus888/Monitor-Apis/blob/master/src/main/java/com/sumscope/cdh/web/controller/AutoSysController.java
  */
 
 @RestController
